@@ -9,7 +9,9 @@ const WeightRouter = express.Router()
  */
 WeightRouter.get('/', async (req, res) => {
   try {
-    const exercises = await Weight.find({})
+    const exercises = await Weight.find({
+      user: req.user.userId,
+    })
 
     res.send(exercises)
   } catch (err) {
@@ -22,7 +24,10 @@ WeightRouter.get('/', async (req, res) => {
  */
 WeightRouter.post('/', async (req, res) => {
   try {
-    const exercise = new Weight(req.body)
+    const exercise = new Weight({
+      ...req.body,
+      user: req.user.userId,
+    })
 
     await exercise.save()
 

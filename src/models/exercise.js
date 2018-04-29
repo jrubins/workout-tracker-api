@@ -9,6 +9,10 @@ const exerciseSchema = new Schema(
     name: String,
     sets: [SetSchema],
     type: String,
+    user: {
+      ref: 'User',
+      type: Schema.Types.ObjectId,
+    },
   },
   {
     timestamps: true,

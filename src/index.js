@@ -2,6 +2,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const express = require('express')
 const helmet = require('helmet')
+const jwt = require('express-jwt')
 const mongoose = require('mongoose')
 
 const { error, info } = require('./utils/logs')
@@ -18,6 +19,13 @@ app.use(
 )
 app.use(helmet())
 app.use(bodyParser.json())
+app.use(
+  jwt({
+    secret: 'dkei29384jsu3hjd81k',
+  }).unless({
+    path: ['/users/login', '/users/signup'],
+  })
+)
 
 // Set up our routes.
 routeHandlers(app)

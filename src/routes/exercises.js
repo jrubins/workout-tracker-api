@@ -9,7 +9,9 @@ const ExercisesRouter = express.Router()
  */
 ExercisesRouter.get('/', async (req, res) => {
   try {
-    const exercises = await Exercise.find({})
+    const exercises = await Exercise.find({
+      user: req.user.userId,
+    })
 
     res.send(exercises)
   } catch (err) {
@@ -22,7 +24,10 @@ ExercisesRouter.get('/', async (req, res) => {
  */
 ExercisesRouter.post('/', async (req, res) => {
   try {
-    const exercise = new Exercise(req.body)
+    const exercise = new Exercise({
+      ...req.body,
+      user: req.user.userId,
+    })
 
     await exercise.save()
 

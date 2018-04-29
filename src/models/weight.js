@@ -4,6 +4,10 @@ const { Schema } = mongoose
 const weightSchema = new Schema(
   {
     date: Number,
+    user: {
+      ref: 'User',
+      type: Schema.Types.ObjectId,
+    },
     weight: Number,
   },
   {
