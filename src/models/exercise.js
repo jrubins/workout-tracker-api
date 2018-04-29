@@ -8,6 +8,7 @@ const exerciseSchema = new Schema(
     date: Number,
     name: String,
     sets: [SetSchema],
+    type: String,
   },
   {
     timestamps: true,

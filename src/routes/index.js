@@ -1,4 +1,5 @@
 const ExercisesRouter = require('./exercises')
+const WeightRouter = require('./weight')
 
 /**
  * The different route handlers for the application.
@@ -8,5 +9,6 @@ const ExercisesRouter = require('./exercises')
 module.exports = {
   routeHandlers: app => {
     app.use('/exercises', ExercisesRouter)
+    app.use('/weight', WeightRouter)
   },
 }

@@ -9,7 +9,6 @@ const ExercisesRouter = express.Router()
  */
 ExercisesRouter.get('/', async (req, res) => {
   try {
-    // const { date } = req.query
     const exercises = await Exercise.find({})
 
     res.send(exercises)
