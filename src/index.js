@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const express = require('express')
@@ -21,9 +22,14 @@ app.use(helmet())
 app.use(bodyParser.json())
 app.use(
   jwt({
-    secret: 'dkei29384jsu3hjd81k',
-  }).unless({
-    path: ['/users/login', '/users/signup'],
+    secret: process.env.JWT_SECRET,
+  }).unless(req => {
+    const apiKey = req.get('X-API-KEY')
+    const hasValidApiKey = apiKey && apiKey === process.env.API_KEY
+
+    return (
+      _.includes(['/users/login', '/users/signup'], req.path) || hasValidApiKey
+    )
   })
 )
 

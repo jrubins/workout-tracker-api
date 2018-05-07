@@ -21,7 +21,7 @@ UsersRouter.post('/login', async (req, res) => {
         {
           userId: user.id,
         },
-        'dkei29384jsu3hjd81k',
+        process.env.JWT_SECRET,
         { expiresIn: '1h' }
       )
 

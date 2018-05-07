@@ -9,9 +9,12 @@ const WeightRouter = express.Router()
  */
 WeightRouter.get('/', async (req, res) => {
   try {
-    const exercises = await Weight.find({
-      user: req.user.userId,
-    })
+    const queryOpts = {}
+    if (req.user) {
+      queryOpts.user = req.user.userId
+    }
+
+    const exercises = await Weight.find(queryOpts)
 
     res.send(exercises)
   } catch (err) {

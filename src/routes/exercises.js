@@ -9,9 +9,12 @@ const ExercisesRouter = express.Router()
  */
 ExercisesRouter.get('/', async (req, res) => {
   try {
-    const exercises = await Exercise.find({
-      user: req.user.userId,
-    })
+    const queryOpts = {}
+    if (req.user) {
+      queryOpts.user = req.user.userId
+    }
+
+    const exercises = await Exercise.find(queryOpts)
 
     res.send(exercises)
   } catch (err) {
