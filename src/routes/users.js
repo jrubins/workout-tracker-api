@@ -14,7 +14,9 @@ UsersRouter.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email })
     bcrypt.compare(req.body.password, user.password, (err, result) => {
       if (err || !result) {
-        return res.status(404).send()
+        return res.status(404).send({
+          message: 'Incorrect email or password.',
+        })
       }
 
       const token = jwt.sign(
