@@ -6,6 +6,8 @@ const SetSchema = require('./nested/setSchema')
 const exerciseSchema = new Schema(
   {
     date: Number,
+    description: String,
+    muscleGroups: [String],
     name: String,
     sets: [SetSchema],
     type: String,
@@ -13,6 +15,7 @@ const exerciseSchema = new Schema(
       ref: 'User',
       type: Schema.Types.ObjectId,
     },
+    variation: String,
   },
   {
     timestamps: true,
