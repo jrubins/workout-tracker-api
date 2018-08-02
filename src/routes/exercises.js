@@ -14,7 +14,7 @@ ExercisesRouter.get('/', async (req, res) => {
       queryOpts.user = req.user.userId
     }
 
-    const exercises = await Exercise.find(queryOpts)
+    const exercises = await Exercise.find(queryOpts).populate('exerciseType')
 
     res.send(exercises)
   } catch (err) {
@@ -27,14 +27,22 @@ ExercisesRouter.get('/', async (req, res) => {
  */
 ExercisesRouter.post('/', async (req, res) => {
   try {
+    const { exerciseType } = req.body
+    if (!exerciseType) {
+      return res.status(422).send({
+        message: 'An exercise type is required.',
+      })
+    }
+
     const exercise = new Exercise({
       ...req.body,
       user: req.user.userId,
     })
 
     await exercise.save()
+    await exercise.populate('exerciseType').execPopulate()
 
-    res.send(exercise)
+    res.status(201).send(exercise)
   } catch (err) {
     res.status(500).send(err)
   }
