@@ -10,9 +10,7 @@ const exerciseSchema = new Schema(
       ref: 'ExerciseType',
       type: Schema.Types.ObjectId,
     },
-    name: String,
     sets: [SetSchema],
-    type: String,
     user: {
       ref: 'User',
       type: Schema.Types.ObjectId,
