@@ -6,9 +6,10 @@
 	"scripts": {
 		"deploy": "./deploy.sh",
 		"precommit": "lint-staged",
-		"start": "yarn && concurrently -k -p \"name\" -n \"db,server\" -c \"red,magenta\" \"yarn start:dev:db\" \"yarn start:dev:server\"",
+		"start": "yarn && yarn start:offline",
 		"start:dev:db": "mongod --dbpath=db/data",
 		"start:dev:server": "NODE_ENV=development nodemon boot",
+		"start:offline": "concurrently -k -p \"name\" -n \"db,server\" -c \"red,magenta\" \"yarn start:dev:db\" \"yarn start:dev:server\"",
 		"start:prod": "node boot"
 	},
 	"engines": {
