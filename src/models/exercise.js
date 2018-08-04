@@ -10,7 +10,6 @@ const exerciseSchema = new Schema(
       ref: 'ExerciseType',
       type: Schema.Types.ObjectId,
     },
-    muscleGroups: [String],
     name: String,
     sets: [SetSchema],
     type: String,
