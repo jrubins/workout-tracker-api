@@ -15,6 +15,7 @@ mongoose.connect(process.env.MONGODB_URI).then(
     info('Successfully connected to MongoDB:', process.env.MONGODB_URI)
 
     const exercises = await Exercise.find({})
+    info(`Processing ${exercises.length} exercises...`)
     for (let i = 0; i < exercises.length; i++) {
       const exercise = exercises[i]
       if (!exercise.exerciseType) {
@@ -35,7 +36,12 @@ mongoose.connect(process.env.MONGODB_URI).then(
         exercise.exerciseType = exerciseType
         await exercise.save()
       }
+
+      if (i % 10 === 0) {
+        info(`Processed ${i} exercises...`)
+      }
     }
+    info(`Done processing exercises.`)
   },
   err => {
     error('Could not connect to DB', err)

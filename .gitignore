@@ -6,7 +6,9 @@
 .idea
 
 # Database files.
+backup.sh
 db
+restore.sh
 
 # Dependencies.
 node_modules
