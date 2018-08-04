@@ -7,6 +7,23 @@ const User = require('../models/user')
 const UsersRouter = express.Router()
 
 /**
+ * Returns a new JWT token for the provided user.
+ *
+ * @param {Object} user
+ * @param {Number} user.id
+ * @returns {String}
+ */
+function getNewJwtToken(user) {
+  return jwt.sign(
+    {
+      userId: user.id,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h' }
+  )
+}
+
+/**
  * Logs a user in.
  */
 UsersRouter.post('/login', async (req, res) => {
@@ -19,16 +36,8 @@ UsersRouter.post('/login', async (req, res) => {
         })
       }
 
-      const token = jwt.sign(
-        {
-          userId: user.id,
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      )
-
       return res.status(200).send({
-        jwt: token,
+        jwt: getNewJwtToken(user),
       })
     })
   } catch (err) {
@@ -50,7 +59,9 @@ UsersRouter.post('/signup', (req, res) => {
 
       await user.save()
 
-      return res.status(201).send()
+      return res.status(201).send({
+        jwt: getNewJwtToken(user),
+      })
     })
   } catch (err) {
     res.status(500).send(err)

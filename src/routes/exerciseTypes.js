@@ -57,13 +57,9 @@ ExerciseTypesRouter.post('/', async (req, res) => {
 ExerciseTypesRouter.patch('/:id', async (req, res) => {
   try {
     const { id } = req.params
-    const exerciseType = await ExerciseType.findByIdAndUpdate(
-      id,
-      {
-        name: req.body.name,
-      },
-      { new: true }
-    )
+    const exerciseType = await ExerciseType.findByIdAndUpdate(id, req.body, {
+      new: true,
+    })
 
     res.status(200).send(exerciseType)
   } catch (err) {
