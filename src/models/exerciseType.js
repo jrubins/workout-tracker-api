@@ -3,6 +3,7 @@ const { Schema } = mongoose
 
 const exerciseTypeSchema = new Schema(
   {
+    category: String,
     description: String,
     muscleGroups: [String],
     name: String,
