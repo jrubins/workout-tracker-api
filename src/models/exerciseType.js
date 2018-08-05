@@ -7,7 +7,6 @@ const exerciseTypeSchema = new Schema(
     description: String,
     muscleGroups: [String],
     name: String,
-    type: String,
     user: {
       ref: 'User',
       type: Schema.Types.ObjectId,
