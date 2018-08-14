@@ -1,3 +1,5 @@
+const { Types } = require('mongoose')
+const _ = require('lodash')
 const express = require('express')
 
 const Exercise = require('../models/exercise')
@@ -60,6 +62,27 @@ ExercisesRouter.post('/:id/sets', async (req, res) => {
     exercise.sets.push(req.body)
 
     await exercise.save()
+    await exercise.populate('exerciseType').execPopulate()
+
+    res.status(201).send(exercise)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
+/**
+ * Edits a set for an exercise.
+ */
+ExercisesRouter.patch('/:id/sets/:setId', async (req, res) => {
+  try {
+    const { id, setId } = req.params
+
+    const exercise = await Exercise.findById(id)
+    const set = _.find(exercise.sets, { _id: Types.ObjectId(setId) })
+    _.merge(set, req.body)
+
+    await exercise.save()
+    await exercise.populate('exerciseType').execPopulate()
 
     res.send(exercise)
   } catch (err) {
