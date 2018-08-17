@@ -29,11 +29,14 @@ ExerciseTypesRouter.get('/', async (req, res) => {
  */
 ExerciseTypesRouter.post('/', async (req, res) => {
   try {
-    const { name } = req.body
-    const existingExerciseType = await ExerciseType.findOne({ name })
+    const { name, variation } = req.body
+    const existingExerciseType = await ExerciseType.findOne({
+      name,
+      variation,
+    })
     if (existingExerciseType) {
       return res.status(409).send({
-        message: `An exercise type with the name "${name}" already exists.`,
+        message: `An exercise type with the name "${name}" and variation "${variation}" already exists.`,
       })
     }
 
