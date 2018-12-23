@@ -11,9 +11,14 @@ const ExercisesRouter = express.Router()
  */
 ExercisesRouter.get('/', async (req, res) => {
   try {
+    const { date } = req.query
     const queryOpts = {}
     if (req.user) {
       queryOpts.user = req.user.userId
+    }
+
+    if (date) {
+      queryOpts.date = date
     }
 
     const exercises = await Exercise.find(queryOpts).populate('exerciseType')
@@ -51,6 +56,23 @@ ExercisesRouter.post('/', async (req, res) => {
 })
 
 /**
+ * Deletes an exercise.
+ */
+ExercisesRouter.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+
+    await Exercise.deleteOne({ _id: Types.ObjectId(id) })
+
+    res.send({
+      message: 'Deleted.',
+    })
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
+/**
  * Adds a set to an exercise.
  */
 ExercisesRouter.post('/:id/sets', async (req, res) => {
@@ -80,6 +102,25 @@ ExercisesRouter.patch('/:id/sets/:setId', async (req, res) => {
     const exercise = await Exercise.findById(id)
     const set = _.find(exercise.sets, { _id: Types.ObjectId(setId) })
     _.merge(set, req.body)
+
+    await exercise.save()
+    await exercise.populate('exerciseType').execPopulate()
+
+    res.send(exercise)
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
+/**
+ * Deletes a set for an exercise.
+ */
+ExercisesRouter.delete('/:id/sets/:setId', async (req, res) => {
+  try {
+    const { id, setId } = req.params
+
+    const exercise = await Exercise.findById(id)
+    exercise.sets = _.reject(exercise.sets, { _id: Types.ObjectId(setId) })
 
     await exercise.save()
     await exercise.populate('exerciseType').execPopulate()

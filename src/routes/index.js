@@ -1,3 +1,4 @@
+const AnalyzeRouter = require('./analyze')
 const BackupRouter = require('./backup')
 const ExercisesRouter = require('./exercises')
 const ExerciseTypesRouter = require('./exerciseTypes')
@@ -11,6 +12,7 @@ const WeightRouter = require('./weight')
  */
 module.exports = {
   routeHandlers: app => {
+    app.use('/analyze', AnalyzeRouter)
     app.use('/backups', BackupRouter)
     app.use('/exercises', ExercisesRouter)
     app.use('/exercise_types', ExerciseTypesRouter)
