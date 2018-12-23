@@ -7,6 +7,12 @@ const winston = require('winston')
  */
 const logger = winston
 
+logger.add(
+  new winston.transports.Console({
+    format: winston.format.simple(),
+  })
+)
+
 module.exports = {
   /**
    * Outputs an info message.
