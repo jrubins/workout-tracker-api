@@ -5,7 +5,6 @@
 	"author": "Jon Rubins <jonrubins@gmail.com>",
 	"scripts": {
 		"deploy": "./deploy.sh",
-		"precommit": "lint-staged",
 		"start": "yarn && yarn start:offline",
 		"start:dev:db": "mongod --dbpath=db/data",
 		"start:dev:server": "NODE_ENV=development nodemon boot",
@@ -30,26 +29,26 @@
 		]
 	},
 	"dependencies": {
-		"bcrypt": "2.0.1",
-		"body-parser": "1.18.2",
-		"cors": "2.8.4",
-		"express": "4.16.3",
+		"bcrypt": "3.0.2",
+		"body-parser": "1.18.3",
+		"cors": "2.8.5",
+		"express": "4.16.4",
 		"express-jwt": "5.3.1",
-		"helmet": "3.12.0",
-		"jsonwebtoken": "8.2.1",
-		"lodash": "4.17.5",
-		"moment": "2.22.1",
+		"helmet": "3.15.0",
+		"jsonwebtoken": "8.4.0",
+		"lodash": "4.17.11",
+		"moment": "2.23.0",
 		"mongoose": "5.4.0",
-		"winston": "2.4.2"
+		"winston": "3.1.0"
 	},
 	"devDependencies": {
-		"babel-eslint": "8.2.2",
-		"concurrently": "3.5.1",
-		"dotenv": "5.0.1",
-		"eslint": "4.19.1",
-		"husky": "0.14.3",
-		"lint-staged": "7.0.4",
-		"nodemon": "1.17.3",
-		"prettier": "1.11.1"
+		"babel-eslint": "10.0.1",
+		"concurrently": "4.1.0",
+		"dotenv": "6.2.0",
+		"eslint": "5.11.0",
+		"husky": "1.2.1",
+		"lint-staged": "8.1.0",
+		"nodemon": "1.18.9",
+		"prettier": "1.15.3"
 	}
 }
